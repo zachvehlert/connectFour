@@ -30,11 +30,11 @@
 /* color of player one and player two */
 
 .p1 {
-  background-color: blue;
+  background-color: teal;
 }
 
 .p2 {
-  background-color: red;
+  background-color: orangered;
 }
 
 /* column-top is table row of clickable areas for each column */
@@ -43,7 +43,12 @@
   border: dashed 1px lightgray;
 }
 
-#column-top td:hover {
+#column-top.player1 td:hover {
+  background-color: teal;
   transition: 0.2s;
-  background-color: gold;
+}
+
+#column-top.player2 td:hover {
+  background-color: orangered;
+  transition: 0.2s;
 }

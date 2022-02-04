@@ -11,9 +11,8 @@ var HEIGHT = 6;
 let currPlayer = 1; // active player: 1 or 2
 let board = []; // array of rows, each row is array of cells  (board[y][x])
 
-/** makeBoard: create in-JS board structure:
- *    board = array of rows, each row is array of cells  (board[y][x])
- */
+// makeBoard: create in-JS board structure:
+// Board = array of rows, each row is array of cells  (board[y][x])
 
 function makeBoard(width, height) {
   for (var y = 0; y < height; y++) {
@@ -25,7 +24,7 @@ function makeBoard(width, height) {
   }
 }
 
-/** makeHtmlBoard: make HTML table and row of column tops. */
+//makeHtmlBoard: make HTML table and row of column tops
 
 function makeHtmlBoard() {
   // Get "htmlBoard" variable from the item in HTML w/ID of "board"
@@ -34,12 +33,14 @@ function makeHtmlBoard() {
   // Create table row html element, set attributes and click event listener
   var top = document.createElement("tr");
   top.setAttribute("id", "column-top");
+  top.classList.add(`player${currPlayer}`);
   top.addEventListener("click", handleClick);
 
   //Creates a headCell element WIDTH amount of times, assigns column ID, and adds the cell to the top table row
   for (var x = 0; x < WIDTH; x++) {
     var headCell = document.createElement("td");
     headCell.setAttribute("id", x);
+    top.classList.add(`player${currPlayer}`);
     top.append(headCell);
   }
   //Adds top row to htmlBoard
@@ -59,7 +60,7 @@ function makeHtmlBoard() {
   }
 }
 
-// Find the highest empty cell in column (x)
+// findSpotForCol: Find the highest empty cell in column (x)
 function findSpotForCol(x) {
   // Begin looping over each cell in column (x)
   for (let y = HEIGHT - 1; y > -1; y--) {
@@ -72,18 +73,15 @@ function findSpotForCol(x) {
   return null;
 }
 
-// Create and set attributes of div element and place it in the cell with ID of ('x-y')
+// placeInTable: Create and set attributes of div element and place it in the cell with ID of ('x-y')
 function placeInTable(y, x) {
   const div = document.createElement("div");
-
   const cell = document.getElementById(`${y}-${x}`);
-
   div.classList.add("piece", `p${currPlayer}`);
   cell.append(div);
 }
 
-/** endGame: announce game end */
-
+// endGame: announce game end
 function endGame(msg) {
   alert(`${msg}`);
 }
@@ -104,13 +102,13 @@ function handleClick(evt) {
   // Update in-memory board
   board[y][x] = currPlayer;
 
-  // check for win
+  // check for win, end the game if true
+  // endgame is delayed 500ms so the piece appears before the alert message is showed
   if (checkForWin()) {
-    return endGame(`Player ${currPlayer} won!`);
+    setTimeout(() => endGame(`Player ${currPlayer} won!`, 500));
   }
-  // switch players
-  currPlayer = currPlayer == 1 ? 2 : 1;
 
+  // checkForTie: checks to see if the whole board is full
   function checkForTie() {
     let nullCount = 0;
     //check each column to see if it's full
@@ -125,14 +123,32 @@ function handleClick(evt) {
     }
     return;
   }
+
   checkForTie();
+
+  // switch players
+  currPlayer = currPlayer == 1 ? 2 : 1;
+
+  //hoverColor: switches hover color on the top row to reflect current player
+
+  function hoverColor(currPlayer) {
+    //Get previous player number from current player, select top row of the board
+    const oldPlayer = currPlayer == 1 ? 2 : 1;
+    const topRow = document.getElementById("column-top");
+
+    //update topRow class with new player number
+    topRow.classList.replace(`player${oldPlayer}`, `player${currPlayer}`);
+  }
+
+  hoverColor(currPlayer);
 }
 
 function checkForWin() {
-  //This function is not called right away
-  //Checks if every cell's coordinates in a potential winner array are inbounds and belong to the current player
-  //if ever cell meets the conditions, returns true
+  // _win: Checks if every cell's coordinates in a potential winner array are inbounds and belong to the current player
+  // If ever cell meets the conditions, returns true
+
   function _win(cells) {
+    //this function is called after the loop below
     return cells.every(
       ([y, x]) =>
         y >= 0 &&
@@ -145,6 +161,7 @@ function checkForWin() {
 
   //loop begins at (0,0), iterates over each cell in each row
   //4 arrays of potential winning coordinates are created for each cell
+
   for (var y = 0; y < HEIGHT; y++) {
     for (var x = 0; x < WIDTH; x++) {
       //array of four coordiantes extending horizontally from (y,x)
@@ -184,5 +201,6 @@ function checkForWin() {
   }
 }
 
+//Construct boards in memory and html
 makeBoard(WIDTH, HEIGHT);
 makeHtmlBoard();
