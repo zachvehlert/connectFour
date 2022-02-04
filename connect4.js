@@ -59,10 +59,11 @@ function makeHtmlBoard() {
   }
 }
 
-// From the bottom of column (x), return (y) if the cell is empty. Return null if no cell in column (x) is empty.
-
+// Find the highest empty cell in column (x)
 function findSpotForCol(x) {
+  // Begin looping over each cell in column (x)
   for (let y = HEIGHT - 1; y > -1; y--) {
+    //get html element at (y,x), check to see if it contains a child element, if not return (y)
     const cell = document.getElementById(`${y}-${x}`);
     if (cell.firstElementChild == null) {
       return y;
@@ -72,7 +73,6 @@ function findSpotForCol(x) {
 }
 
 // Create and set attributes of div element and place it in the cell with ID of ('x-y')
-
 function placeInTable(y, x) {
   const div = document.createElement("div");
 
@@ -85,11 +85,8 @@ function placeInTable(y, x) {
 /** endGame: announce game end */
 
 function endGame(msg) {
-  // TODO: pop up alert message
   alert(`${msg}`);
 }
-
-/** handleClick: handle click of column top to play piece */
 
 function handleClick(evt) {
   // get x from ID of clicked cell
@@ -102,32 +99,40 @@ function handleClick(evt) {
   }
 
   // place piece in board and add to HTML table
-  // TODO: add line to update in-memory board
   placeInTable(y, x);
 
+  // Update in-memory board
   board[y][x] = currPlayer;
 
   // check for win
   if (checkForWin()) {
     return endGame(`Player ${currPlayer} won!`);
   }
-
-  // check for tie
-  // TODO: check if all cells in board are filled; if so call, call endGame
-
   // switch players
-  // TODO: switch currPlayer 1 <-> 2
   currPlayer = currPlayer == 1 ? 2 : 1;
+
+  function checkForTie() {
+    let nullCount = 0;
+    //check each column to see if it's full
+    for (let w = 0; w < WIDTH; w++) {
+      if (findSpotForCol(w) == null) {
+        nullCount += 1;
+      }
+    }
+    //if the each column is full, it's a tie. Otherwise return nothing
+    if (nullCount == WIDTH) {
+      return endGame("The board is full, it's a tie!");
+    }
+    return;
+  }
+  checkForTie();
 }
 
-/** checkForWin: check board cell-by-cell for "does a win start here?" */
-
 function checkForWin() {
+  //This function is not called right away
+  //Checks if every cell's coordinates in a potential winner array are inbounds and belong to the current player
+  //if ever cell meets the conditions, returns true
   function _win(cells) {
-    // Check four cells to see if they're all color of current player
-    //  - cells: list of four (y, x) cells
-    //  - returns true if all are legal coordinates & all match currPlayer
-
     return cells.every(
       ([y, x]) =>
         y >= 0 &&
@@ -138,35 +143,40 @@ function checkForWin() {
     );
   }
 
-  // TODO: read and understand this code. Add comments to help you.
-
+  //loop begins at (0,0), iterates over each cell in each row
+  //4 arrays of potential winning coordinates are created for each cell
   for (var y = 0; y < HEIGHT; y++) {
     for (var x = 0; x < WIDTH; x++) {
+      //array of four coordiantes extending horizontally from (y,x)
       var horiz = [
         [y, x],
         [y, x + 1],
         [y, x + 2],
         [y, x + 3],
       ];
+      //array of four coordiantes extending vertically from (y,x)
       var vert = [
         [y, x],
         [y + 1, x],
         [y + 2, x],
         [y + 3, x],
       ];
+      //array of four coordiantes extending diagonally right from (y,x)
       var diagDR = [
         [y, x],
         [y + 1, x + 1],
         [y + 2, x + 2],
         [y + 3, x + 3],
       ];
+      //array of four coordiantes extending diagonally left from (y,x)
       var diagDL = [
         [y, x],
         [y + 1, x - 1],
         [y + 2, x - 2],
         [y + 3, x - 3],
       ];
-
+      //Each potential winner array is checked against winning conditions
+      //if any of the four array's meet winning conditions, return true
       if (_win(horiz) || _win(vert) || _win(diagDR) || _win(diagDL)) {
         return true;
       }
