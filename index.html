@@ -2,10 +2,23 @@
 <head>
   <title>Connect 4</title>
   <link href="connect4.css" rel="stylesheet">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Open+Sans+Condensed:wght@300&family=Quicksand:wght@300&display=swap" rel="stylesheet">
 </head>
 <body>
 <div id="game">
+  <h1>CONNECT 4</h1>
   <table id="board"></table>
+  <div id="playerInfo">
+    <p id="p1-title">Player One</p>
+    <div id="player1Display"></div>
+    <div id="player2Display"></div>
+    <p id="p2-title">Player Two</p>
+  </div>
+  <div id="reset" >
+    <p>RESET GAME</p>
+  </div>
 </div>
 
 <script src="connect4.js"></script>

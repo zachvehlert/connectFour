@@ -10,6 +10,14 @@ var HEIGHT = 6;
 
 let currPlayer = 1; // active player: 1 or 2
 let board = []; // array of rows, each row is array of cells  (board[y][x])
+let gameOver = false; //disables certain clicks when game is over
+
+const reset = document.getElementById("reset");
+reset.addEventListener("click", resetBoard);
+
+function resetBoard() {
+  location.reload();
+}
 
 // makeBoard: create in-JS board structure:
 // Board = array of rows, each row is array of cells  (board[y][x])
@@ -83,10 +91,16 @@ function placeInTable(y, x) {
 
 // endGame: announce game end
 function endGame(msg) {
+  gameOver = true;
   alert(`${msg}`);
 }
 
 function handleClick(evt) {
+  //Ignore click if game is over
+  if (gameOver) {
+    return;
+  }
+
   // get x from ID of clicked cell
   let x = +evt.target.id;
 
@@ -105,7 +119,7 @@ function handleClick(evt) {
   // check for win, end the game if true
   // endgame is delayed 500ms so the piece appears before the alert message is showed
   if (checkForWin()) {
-    setTimeout(() => endGame(`Player ${currPlayer} won!`, 500));
+    endGame(`Player ${currPlayer} won!`);
   }
 
   // checkForTie: checks to see if the whole board is full
@@ -131,9 +145,9 @@ function handleClick(evt) {
 
   //hoverColor: switches hover color on the top row to reflect current player
 
-  function hoverColor(currPlayer) {
+  function hoverColor(player) {
     //Get previous player number from current player, select top row of the board
-    const oldPlayer = currPlayer == 1 ? 2 : 1;
+    const oldPlayer = player == 1 ? 2 : 1;
     const topRow = document.getElementById("column-top");
 
     //update topRow class with new player number
