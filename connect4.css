@@ -1,134 +1,143 @@
 html {
-  font-family: "Open Sans Condensed", sans-serif;
-  font-family: "Quicksand", sans-serif;
-  text-align: center;
+	font-family: "Open Sans Condensed", sans-serif;
+	font-family: "Quicksand", sans-serif;
+	text-align: center;
 }
 
 body {
-  background-color: #2b303a;
+	background-color: #2b303a;
 }
 
 #game {
-  display: inline-block;
-  border-radius: 4%;
-  background-color: #bac1b8;
-  margin: 5%;
+	display: inline-block;
+	border-radius: 4%;
+	background-color: #bac1b8;
+	margin: 3vh;
 }
 
 h1 {
-  font-size: 50px;
-  color: #2b303a;
-  text-align: center;
-  margin-bottom: 5%;
+	font-size: 50px;
+	color: #2b303a;
+	text-align: center;
+	margin-bottom: 5%;
 }
 
 #board {
-  position: relative;
-  margin: auto;
+	position: relative;
+	margin: auto;
 }
 
 #board td {
-  width: 50px;
-  height: 50px;
-  border: solid 1px #2b303a;
-  border-radius: 40%;
-  position: relative;
+	width: 50px;
+	height: 50px;
+	border: solid 2px #2b303a;
+	border-radius: 40%;
+	position: relative;
+	padding: 3px;
+	overflow: hidden;
 }
 
 /* pieces are div within game table cells: draw as colored circles */
 
 .piece {
-  margin: 0px;
-  height: 50px;
-  width: 50px;
-  border-radius: 40%;
+	height: 50px;
+	width: 50px;
+	border-radius: 40%;
 }
 
 /* color of player one and player two */
 
 .p1 {
-  background-color: teal;
+	background-color: teal;
 }
 
 .p2 {
-  background-color: orangered;
+	background-color: orangered;
 }
 
 /* column-top is table row of clickable areas for each column */
 
 #column-top td {
-  transition: 0.5s;
-  border: solid 1px #acacac;
+	transition: 0.5s;
+	border: solid 1px #777777;
 }
 
 #column-top.player1 td:hover {
-  background-color: teal;
-  cursor: pointer;
+	background-color: teal;
+	cursor: pointer;
 }
 
 #column-top.player2 td:hover {
-  background-color: orangered;
-  cursor: pointer;
+	background-color: orangered;
+	cursor: pointer;
 }
 
 #player1Display {
-  display: inline-block;
-  height: 50px;
-  width: 50px;
-  background-color: teal;
-  border-radius: 40%;
-  margin-left: 20px;
-  margin-right: 20px;
+	display: inline-block;
+	height: 50px;
+	width: 50px;
+	background-color: teal;
+	border-radius: 40%;
+	margin-left: 20px;
+	margin-right: 20px;
 }
 
 #player2Display {
-  display: inline-block;
-  height: 50px;
-  width: 50px;
-  background-color: orangered;
-  border-radius: 40%;
-  margin-left: 20px;
-  margin-right: 20px;
+	display: inline-block;
+	height: 50px;
+	width: 50px;
+	background-color: orangered;
+	border-radius: 40%;
+	margin-left: 20px;
+	margin-right: 20px;
+}
+
+p {
+	font-weight: bolder;
+	font-size: 20px;
+}
+
+#vs {
+	color: #2b303a94;
+	font-size: 15px;
+	font-style: italic;
 }
 
 #p1-title {
-  font-weight: bolder;
-  font-size: 20px;
-  display: inline;
-  color: teal;
+	display: inline;
+	color: teal;
 }
 
 #p2-title {
-  font-weight: bolder;
-  font-size: 20px;
-  display: inline;
-  color: orangered;
+	display: inline;
+	color: orangered;
 }
 
 #playerInfo {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  margin-top: 50px;
-  margin-left: 50px;
-  margin-right: 50px;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	margin-top: 50px;
+	margin-left: 50px;
+	margin-right: 50px;
 }
 
 #reset {
-  display: inline-block;
-  margin: 20px;
-  border-radius: 30%;
-  color: #898a8d;
-  transition: color 500ms;
+	display: inline-block;
+	margin: 20px;
+	border-radius: 5px;
+	color: #898a8d;
+	transition: all 750ms;
+	border: 2px solid rgba(0, 0, 0, 0);
 }
 
 #reset p {
-  font-weight: bolder;
-  font-size: 20px;
-  margin: 5px;
+	margin: 5px;
 }
 
 #reset:hover {
-  color: #2b303a;
-  cursor: pointer;
+	color: #2b303a;
+	cursor: pointer;
+	border: 2px solid #2b303a;
+	background-color: goldenrod;
 }
