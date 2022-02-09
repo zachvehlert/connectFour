@@ -5,8 +5,8 @@
  * board fills (tie)
  */
 
-var WIDTH = 7;
-var HEIGHT = 6;
+const WIDTH = 7;
+const HEIGHT = 6;
 
 let currPlayer = 1; // active player: 1 or 2
 let board = []; // array of rows, each row is array of cells  (board[y][x])
@@ -24,9 +24,9 @@ function resetBoard () {
 // Board = array of rows, each row is array of cells  (board[y][x])
 
 function makeBoard (width, height) {
-	for (var y = 0; y < height; y++) {
+	for (let y = 0; y < height; y++) {
 		let row = [];
-		for (var x = 0; x < width; x++) {
+		for (let x = 0; x < width; x++) {
 			row.push(null);
 		}
 		board.push(row);
@@ -40,14 +40,14 @@ function makeHtmlBoard () {
 	const htmlBoard = document.getElementById('board');
 
 	// Create table row html element, set attributes and click event listener
-	var top = document.createElement('tr');
+	let top = document.createElement('tr');
 	top.setAttribute('id', 'column-top');
 	top.classList.add(`player${currPlayer}`);
 	top.addEventListener('click', handleClick);
 
 	//Creates a headCell element WIDTH amount of times, assigns column ID, and adds the cell to the top table row
-	for (var x = 0; x < WIDTH; x++) {
-		var headCell = document.createElement('td');
+	for (let x = 0; x < WIDTH; x++) {
+		let headCell = document.createElement('td');
 		headCell.setAttribute('id', x);
 		top.classList.add(`player${currPlayer}`);
 		top.append(headCell);
@@ -57,9 +57,9 @@ function makeHtmlBoard () {
 
 	// Creates a table row HEIGHT amount of times
 	// For each row a cell is created WIDTH amount of times, assigned xy coordinates, and appended to the row.
-	for (var y = 0; y < HEIGHT; y++) {
+	for (let y = 0; y < HEIGHT; y++) {
 		const row = document.createElement('tr');
-		for (var x = 0; x < WIDTH; x++) {
+		for (let x = 0; x < WIDTH; x++) {
 			const cell = document.createElement('td');
 			cell.setAttribute('id', `${y}-${x}`);
 			row.append(cell);
@@ -174,16 +174,16 @@ function checkForWin () {
 	//loop begins at (0,0), iterates over each cell in each row
 	//4 arrays of potential winning coordinates are created for each cell
 
-	for (var y = 0; y < HEIGHT; y++) {
-		for (var x = 0; x < WIDTH; x++) {
+	for (let y = 0; y < HEIGHT; y++) {
+		for (let x = 0; x < WIDTH; x++) {
 			//array of four coordiantes extending horizontally from (y,x)
-			var horiz = [ [ y, x ], [ y, x + 1 ], [ y, x + 2 ], [ y, x + 3 ] ];
+			const horiz = [ [ y, x ], [ y, x + 1 ], [ y, x + 2 ], [ y, x + 3 ] ];
 			//array of four coordiantes extending vertically from (y,x)
-			var vert = [ [ y, x ], [ y + 1, x ], [ y + 2, x ], [ y + 3, x ] ];
+			const vert = [ [ y, x ], [ y + 1, x ], [ y + 2, x ], [ y + 3, x ] ];
 			//array of four coordiantes extending diagonally right from (y,x)
-			var diagDR = [ [ y, x ], [ y + 1, x + 1 ], [ y + 2, x + 2 ], [ y + 3, x + 3 ] ];
+			const diagDR = [ [ y, x ], [ y + 1, x + 1 ], [ y + 2, x + 2 ], [ y + 3, x + 3 ] ];
 			//array of four coordiantes extending diagonally left from (y,x)
-			var diagDL = [ [ y, x ], [ y + 1, x - 1 ], [ y + 2, x - 2 ], [ y + 3, x - 3 ] ];
+			const diagDL = [ [ y, x ], [ y + 1, x - 1 ], [ y + 2, x - 2 ], [ y + 3, x - 3 ] ];
 			//Each potential winner array is checked against winning conditions
 			//if any of the four array's meet winning conditions, return true
 			if (_win(horiz) || _win(vert) || _win(diagDR) || _win(diagDL)) {
